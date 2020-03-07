@@ -28,7 +28,6 @@ def create_dataset(dataset, look_back=1):
   return numpy.array(dataX), numpy.array(dataY)
 
 
-
 # split dataset into train and test sets
 train_size = int(len(dataset) * 0.67)
 test_size = len(dataset) - train_size
@@ -40,7 +39,6 @@ print(len(train), len(test))
 look_back = 10
 trainX, trainY = create_dataset(train, look_back)
 testX, testY = create_dataset(test, look_back)
-
 
 # create and fit the LSTM network
 model = Sequential()
@@ -72,7 +70,10 @@ testPredictPlot[len(trainPredict)+(look_back*2)+1:len(dataset)-1, :] = testPredi
 
 
 # plot baseline and predictions
-plt.plot(dataset)
-plt.plot(trainPredictPlot)
-plt.plot(testPredictPlot)
-plt.show()
+plt.plot(dataset, label="dataset")
+plt.plot(trainPredictPlot, label="Training")
+plt.plot(testPredictPlot, label="Test")
+plt.legend();
+
+
+
