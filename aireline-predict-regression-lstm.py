@@ -27,17 +27,13 @@ def create_dataset(dataset, look_back=1):
     dataY.append(dataset[i + look_back, 0])
   return numpy.array(dataX), numpy.array(dataY)
 
-#  
-sc_X = StandardScaler()
-dataset = sc_X.fit_transform(dataset)
-
 # split into train and test sets
 train_size = int(len(dataset) * 0.67)
 test_size = len(dataset) - train_size
 train, test = dataset[0:train_size,:], dataset[train_size:len(dataset),:]
 
 # reshape into X=t and Y=t+1
-look_back = 1
+look_back = 10
 trainX, trainY = create_dataset(train, look_back)
 testX, testY = create_dataset(test, look_back)
 
@@ -51,9 +47,9 @@ def model():
   base_model.add(LSTM(4, input_dim=look_back))
   base_model.add(Dense(1))
   base_model.compile(loss='mean_squared_error', optimizer='adam')
-  model.fit(trainX, trainY, nb_epoch=100, batch_size=1, verbose=2)
   return base_model
   
+model.fit(trainX, trainY, nb_epoch=100, batch_size=1, verbose=2)
 
 # make predictions
 trainPredict = model.predict(trainX)
