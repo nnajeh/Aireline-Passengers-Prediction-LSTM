@@ -46,11 +46,14 @@ trainX = numpy.reshape(trainX, (trainX.shape[0], 1, trainX.shape[1]))
 testX = numpy.reshape(testX, (testX.shape[0], 1, testX.shape[1]))
 
 # create and fit the LSTM network
-model = Sequential()
-model.add(LSTM(4, input_dim=look_back))
-model.add(Dense(1))
-model.compile(loss='mean_squared_error', optimizer='adam')
-model.fit(trainX, trainY, nb_epoch=100, batch_size=1, verbose=2)
+def model():
+  base_model = Sequential()
+  base_model.add(LSTM(4, input_dim=look_back))
+  base_model.add(Dense(1))
+  base_model.compile(loss='mean_squared_error', optimizer='adam')
+  model.fit(trainX, trainY, nb_epoch=100, batch_size=1, verbose=2)
+  return base_model
+  
 
 # make predictions
 trainPredict = model.predict(trainX)
